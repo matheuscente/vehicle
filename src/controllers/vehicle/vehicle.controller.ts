@@ -17,6 +17,7 @@ const users: iUserBD[] = [];
 export class ControllerVehicle {
   static getAll(req: Request, res: Response, next: NextFunction) {
     try {
+      if(users.length === 0) throw new NotFoundError('Not found users')
       res.status(200).json(users);
     } catch (err) {
       next(err);
@@ -26,6 +27,7 @@ export class ControllerVehicle {
   static getById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = Number(req.params.id);
+      if(isNaN(userId)) throw new ValidationError('id deve ser um número')
       const user: iUserBD | undefined = users.find(
         (user) => user.id === userId
       );
@@ -64,6 +66,7 @@ export class ControllerVehicle {
   static update(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = Number(req.params.id);
+      if(isNaN(userId)) throw new ValidationError('id deve ser um número')
 
       const indexItem = users.findIndex((user) => user.id === userId);
 
@@ -83,14 +86,17 @@ export class ControllerVehicle {
   static delete(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = Number(req.params.id);
+      if(isNaN(userId)) throw new ValidationError('id deve ser um número')
+
       const indexItem = users.findIndex((user) => user.id === userId);
 
       if (indexItem !== -1) {
         users.splice(indexItem, 1);
         res.status(200).json({ message: "usuario deletado" });
         return;
+      } else {
+        throw new NotFoundError('usuário não encontrado')
       }
-      res.status(400).json({ message: "usuario nao encontrado" });
     } catch (err) {
       next(err);
     }
