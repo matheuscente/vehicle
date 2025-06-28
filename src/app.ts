@@ -8,7 +8,4 @@ routes(app)
 PageNotFoundMiddleware.PageNotFound(app)
 ErrorHandler.handler(app)
 
-
-app.listen(3000, () => {
-    console.log('app running in 3000 port')
-})
+export default app

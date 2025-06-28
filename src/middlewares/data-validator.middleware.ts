@@ -1,16 +1,15 @@
 import { celebrate, Segments, Joi } from "celebrate";
 
-export class RoutesDataValidator{
-    
-    static bodyValidator(schema: Joi.ObjectSchema) {
-        return celebrate({
-            [Segments.BODY]: schema
-        })
-    }
+export class RoutesDataValidator {
+  static bodyValidator(schema: Joi.ObjectSchema) {
+    return celebrate({
+      [Segments.BODY]: schema,
+    });
+  }
 
-    static paramsValidator(schema: Joi.ObjectSchema) {
-        return celebrate({
-            [Segments.PARAMS]: schema
-        })
-    }
+  static paramsValidator(schema: Joi.ObjectSchema) {
+    return celebrate({
+      [Segments.PARAMS]: schema,
+    });
+  }
 }
